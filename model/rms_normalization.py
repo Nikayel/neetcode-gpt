@@ -7,7 +7,7 @@ class Solution:
         # Implement RMS Normalization (similar to LayerNorm but without mean centering or beta)
         # Normalize x, then scale by gamma
         # Return result rounded to 4 decimal places as a list
-        rms = np.sqrt(np.mean(np.pow(x,2)))
+        rms = np.sqrt(np.mean(np.pow(x,2)+eps))
         rmsN = x / rms * gamma
         return np.round(rmsN, 4)
 

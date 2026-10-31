@@ -9,15 +9,16 @@ class Solution:
         # y_pred: predicted probabilities
         # Hint: clip y_pred to [1e-7, 1 - 1e-7] to avoid log(0)
         # return round(your_answer, 4)
-        y_pred = np.clip(y_pred, 1e-7, 1 - 1e-7)
-        answer = -(y_true * np.log(y_pred)+(1-y_true)*(np.log(1-y_pred)))
-        return np.round(np.mean(answer), 4)
+        y_pred = np.clip(y_pred, 1e-7, 1- 1e-7)
+        loss = -np.mean(y_true*np.log(y_pred)+ (1-y_true)*np.log(1-y_pred))
+        return np.round(loss, 4)
 
     def categorical_cross_entropy(self, y_true: NDArray[np.float64], y_pred: NDArray[np.float64]) -> float:
         # y_true: one-hot encoded true labels (shape: n_samples x n_classes)
         # y_pred: predicted probabilities (shape: n_samples x n_classes)
         # Hint: clip y_pred to [1e-7, 1 - 1e-7] to avoid log(0)
         # return round(your_answer, 4)
-        y_pred = np.clip(y_pred, 1e-7, 1-1e-7)
-        loss = np.mean(np.sum(-np.log(y_pred)*y_true, axis=1) )
+        y_pred = np.clip(y_pred, 1e-7, 1 - 1e-7)
+        correct_idx_p = y_pred[np.arange(len(y_true)), np.argmax(y_true, axis=1)]
+        loss = -np.mean(np.log(correct_idx_p))
         return np.round(loss, 4)
